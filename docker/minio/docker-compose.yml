@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  minio:
+    container_name: minio
+    image: minio/minio:latest
+    volumes:
+      - /Users/nthompson/development/minio-pyats-sandbox/docker/minio/data:/data:Z
+    ports:
+      - 9000:9000
+    environment:
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: minio123
+    command: minio server /data
+    restart: always
+    privileged: True
+    # Comment out the line below if deploying on MacOS
+    #network_mode: host
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3

@@ -1,0 +1,140 @@
+---
+# 
+# Ansible Playbook for Devnet Create Sandbox and Workshop
+# Written By: Nick Thompson (@nsthompson)
+# Copyright (C) 2020 World Wide Technology
+# All Rights Reserved
+#
+
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tags:
+    - pre
+
+  tasks:
+    - name: Generate Change ID
+      set_fact:
+        chg_id: "CHG{{ 9999 | random(start=1000) }}"
+      delegate_to: localhost
+
+    - name: Create Directory to Store Snapshots
+      file:
+        path: snapshots/sandbox/{{ chg_id }}
+        mode: 0755
+        state: directory
+
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tags:
+    - post
+
+  tasks:
+    - name: Delegate change_id
+      set_fact: 
+        chg_id: "{{ change_id }}"
+      delegate_to: localhost
+
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tags:
+    - pre
+    - post
+
+  tasks:
+    - name: Display Change ID
+      debug:
+        msg: "Change ID: {{ hostvars['localhost']['chg_id'] }}"
+
+- hosts: routers
+  connection: network_cli
+  gather_facts: no
+  vars:
+    ansible_user: admin
+    ansible_password: devnet
+  
+  tasks:
+    - name: Populate chg_id
+      set_fact:
+        chg_id: "{{ hostvars['localhost']['chg_id'] }}"
+      tags:
+        - pre
+        - post
+
+    - name: Gather Pre-Change Snapshot of Routing Table
+      include_role:
+        name: ansible-pyats
+        tasks_from: snapshot_command
+        apply:
+          tags:
+            - pre
+      vars:
+        command: show ip route
+        file: "snapshots/sandbox/{{ chg_id }}/{{ inventory_hostname }}_pre_routes.json"
+      tags:
+        - pre
+
+    - name: Gather Post-Change Snapshot of Routing Table
+      include_role:
+        name: ansible-pyats
+        tasks_from: snapshot_command
+        apply:
+          tags:
+            - post
+      vars:
+        command: show ip route
+        file: "snapshots/sandbox/{{ chg_id }}/{{ inventory_hostname }}_post_routes.json"
+      tags:
+        - post
+        
+    - name: Read in Pre-Change Snapshot
+      set_fact:
+        snapshot_data: "{{ lookup('file', 'snapshots/sandbox/{{ chg_id }}/{{ inventory_hostname }}_pre_routes.json') | from_json }}"
+      tags:
+        - post
+
+    - name: Read in Post-Change Snapshot
+      set_fact:
+        current_data: "{{ lookup('file', 'snapshots/sandbox/{{ chg_id }}/{{ inventory_hostname }}_post_routes.json') | from_json }}"
+      tags:
+        - post
+
+    - name: Populate snapshot_routes
+      set_fact:
+        snapshot_routes: "{{ snapshot_routes|default({}) | combine( { item.key: item.value.source_protocol } ) }}"
+      loop: "{{ snapshot_data.vrf.default.address_family.ipv4.routes | dict2items }}"
+      no_log: True
+      tags:
+        - post
+
+    - name: Populate current_routes
+      set_fact:
+        current_routes: "{{ current_routes|default({}) | combine( { item.key: item.value.source_protocol } ) }}"
+      loop: "{{ current_data.vrf.default.address_family.ipv4.routes | dict2items }}"
+      no_log: True
+      tags:
+        - post
+
+    - name: Display snapshot_routes
+      debug: var=snapshot_routes
+      tags:
+        - post
+
+    - name: Display current_routes
+      debug: var=current_routes
+      tags:
+        - post
+
+    - name: Calculate Route Table Differences
+      set_fact: 
+        route_diff: "{{ snapshot_routes | pyats_diff(current_routes) }}"
+      tags:
+        - post
+      
+    - name: Display Route Table Differences
+      debug:
+        msg: "{{ route_diff | parse_diff }}"
+      tags:
+        - post

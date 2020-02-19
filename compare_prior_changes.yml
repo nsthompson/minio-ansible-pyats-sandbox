@@ -1,0 +1,67 @@
+---
+# 
+# Ansible Playbook to Compare Prior Change IDs for Devnet Create Sandbox
+# Written By: Nick Thompson (@nsthompson)
+# Copyright (C) 2020 World Wide Technology
+# All Rights Reserved
+#
+# Usage:
+# ansible-playbook -i inventory compare_prior_changes.yml -e "change_id_1=CHGXXXX change_id_1_state=pre change_id_2=CHGYYYY change_id_2_state=post"
+#
+# NOTE: change_id_1_state and change_id_2_state can be either 'pre' or 'post'
+
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tags:
+    - always
+
+  tasks:
+    - name: Display First Change ID and State
+      debug:
+        msg: "Change ID 1: {{ change_id_1 }} - Change ID 1 State: {{ change_id_1_state }}"
+
+    - name: Display Second Change ID and State
+      debug:
+        msg: "Change ID 2: {{ change_id_2 }} - Change ID 2 State: {{ change_id_2_state }}"
+
+- hosts: routers
+  connection: local
+  gather_facts: no
+  roles:
+    - ansible-pyats
+  
+  tasks:
+    - name: Read in First Change Snapshot
+      set_fact:
+        snapshot1_data: "{{ lookup('file', 'snapshots/sandbox/{{ change_id_1 }}/{{ inventory_hostname }}_{{ change_id_1_state }}_routes.json') | from_json }}"
+
+    - name: Read in Second Change Snapshot
+      set_fact:
+        snapshot2_data: "{{ lookup('file', 'snapshots/sandbox/{{ change_id_2 }}/{{ inventory_hostname }}_{{ change_id_2_state }}_routes.json') | from_json }}"
+
+    - name: Populate snapshot1_routes
+      set_fact:
+        snapshot1_routes: "{{ snapshot1_routes|default({}) | combine( { item.key: item.value.source_protocol } ) }}"
+      loop: "{{ snapshot1_data.vrf.default.address_family.ipv4.routes | dict2items }}"
+      no_log: True
+
+    - name: Populate snapshot2_routes
+      set_fact:
+        snapshot2_routes: "{{ snapshot2_routes|default({}) | combine( { item.key: item.value.source_protocol } ) }}"
+      loop: "{{ snapshot2_data.vrf.default.address_family.ipv4.routes | dict2items }}"
+      no_log: True
+
+    - name: Display snapshot1_routes
+      debug: var=snapshot1_routes
+
+    - name: Display snapshot2_routes
+      debug: var=snapshot2_routes
+
+    - name: Calculate Route Table Differences
+      set_fact: 
+        route_diff: "{{ snapshot1_routes | pyats_diff(snapshot2_routes) }}"
+      
+    - name: Display Route Table Differences
+      debug:
+        msg: "{{ route_diff | parse_diff }}"
