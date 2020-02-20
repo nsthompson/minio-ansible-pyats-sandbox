@@ -27,7 +27,6 @@
     - name: Create Directory to Store Snapshots
       file:
         path: snapshots/sandbox/{{ chg_id }}
-        mode: 0755
         state: directory
 
 - hosts: localhost

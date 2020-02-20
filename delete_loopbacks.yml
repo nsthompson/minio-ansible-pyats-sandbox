@@ -46,6 +46,7 @@
     loop: "{{ all_loopback_ids }}"
     loop_control:
       pause: 2
+    ignore_errors: true
     tags:
       - all_loopbacks
 
@@ -58,5 +59,6 @@
     loop: "{{ (all_loopback_ids | shuffle)[0:10] }}"
     loop_control:
       pause: 2
+    ignore_errors: true
     tags:
       - random_loopbacks

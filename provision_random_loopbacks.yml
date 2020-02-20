@@ -38,6 +38,7 @@
       loop_control:
         pause: 2
         index_var: my_idx_a
+      ignore_errors: true
       tags:
         - first
 
@@ -54,6 +55,7 @@
       loop_control:
         pause: 2
         index_var: my_idx_b
+      ignore_errors: true
       tags:
         - first
 
@@ -70,6 +72,7 @@
       loop_control:
         pause: 2
         index_var: my_idx_a2
+      ignore_errors: true
       tags:
         - second
 
@@ -86,5 +89,6 @@
       loop_control:
         pause: 2
         index_var: my_idx_b2
+      ignore_errors: true
       tags:
         - second
