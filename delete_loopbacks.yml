@@ -1,0 +1,62 @@
+---
+#
+# Playbook to Delete Traffic Jam Loopbacks for Devnet Create Sandbox
+# Written by: Nick Thompson (@nsthompson)
+# Copyright (C) 2020 World Wide Technology
+# All Rights Reserved
+#
+# Usage:
+# -- Delete All Loopbacks
+# ansible-playbook -i inventory delete_loopbacks.yml --tags="all_loopbacks"
+# -- Delete Random Loopbacks
+# ansible-playbook -i inventory delete_loopbacks.yml --tags="random_loopbacks"
+#
+
+- hosts: trafficjam
+  connection: local
+
+  collections:
+    - wwt.trafficjam
+
+  vars:
+    all_loopback_ids: []
+
+  tasks:
+  - name: Query All Loopback Interfaces
+    trafficjam_dummy_interfaces:
+      host: "{{ ansible_host }}"
+      state: query
+    register: dummy_interface_query
+    tags:
+      - always
+
+  - name: Build a list of all loopback IDs
+    set_fact:
+      all_loopback_ids: "{{ all_loopback_ids }} + [ '{{ item.dummy_id }}' ]"
+    with_items: "{{ dummy_interface_query.response }}"
+    tags:
+      - always
+
+  - name: Delete All Loopback Interfaces from Traffic Jam
+    trafficjam_dummy_interfaces:
+      host: "{{ ansible_host }}"
+      state: absent
+      config:
+        dummy_id: "{{ item }}"
+    loop: "{{ all_loopback_ids }}"
+    loop_control:
+      pause: 2
+    tags:
+      - all_loopbacks
+
+  - name: Delete Random Loopback Interfaces from Traffic Jam
+    trafficjam_dummy_interfaces:
+      host: "{{ ansible_host }}"
+      state: absent
+      config:
+        dummy_id: "{{ item }}"
+    loop: "{{ (all_loopback_ids | shuffle)[0:10] }}"
+    loop_control:
+      pause: 2
+    tags:
+      - random_loopbacks

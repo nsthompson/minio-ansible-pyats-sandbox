@@ -1,0 +1,49 @@
+---
+#
+# Playbook to Provision Traffic Jam Loopbacks for Devnet Create Sandbox
+# Written by: Nick Thompson (@nsthompson)
+# Copyright (C) 2020 World Wide Technology
+# All Rights Reserved
+#
+# Usage:
+# ansible-playbook -i inventory provision_loopbacks.yml
+#
+
+- hosts: trafficjam
+  connection: local
+
+  collections:
+    - wwt.trafficjam
+
+  tasks:
+  - name: Load Variables
+    include_vars:
+        file: ips.yml
+
+  - name: Provision VRF_A Loopback Interfaces
+    trafficjam_dummy_interfaces:
+        host: "{{ ansible_host }}"
+        state: present
+        config:
+            name: "Loopback_A.{{ my_idx_a }}"
+            description: "VRF_A Loopback"
+            vrf_id: 54
+            v4_address: "{{ item }}"
+    loop: "{{ vrf_A_addresses }}"
+    loop_control:
+        pause: 2
+        index_var: my_idx_a
+
+  - name: Provision VRF_B Loopback Interfaces
+    trafficjam_dummy_interfaces:
+        host: "{{ ansible_host }}"
+        state: present
+        config:
+            name: "Loopback_B.{{ my_idx_b }}"
+            description: "VRF_B Loopback"
+            vrf_id: 55
+            v4_address: "{{ item }}"
+    loop: "{{ vrf_B_addresses }}"
+    loop_control:
+        pause: 2
+        index_var: my_idx_b

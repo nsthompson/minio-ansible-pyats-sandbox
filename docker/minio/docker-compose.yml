@@ -4,8 +4,9 @@ services:
   minio:
     container_name: minio
     image: minio/minio:latest
+    # Replace <path> with path to location you want to present as the /data volume
     volumes:
-      - /Users/nthompson/development/minio-pyats-sandbox/docker/minio/data:/data:Z
+      - <path>:/data:Z
     ports:
       - 9000:9000
     environment:
@@ -15,7 +16,7 @@ services:
     restart: always
     privileged: True
     # Comment out the line below if deploying on MacOS
-    #network_mode: host
+    network_mode: host
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
       interval: 30s

@@ -1,9 +1,15 @@
 ---
 # 
-# Ansible Playbook for Devnet Create Sandbox and Workshop
+# Ansible Playbook to Gather and Compare Routing Information for Devnet Create Sandbox
 # Written By: Nick Thompson (@nsthompson)
 # Copyright (C) 2020 World Wide Technology
 # All Rights Reserved
+#
+# Usage:
+# -- Collect State of Devices 'pre' change window
+# ansible-playbook -i inventory compare_routes.yml --tags="pre"
+# -- Collect State of Devices 'post' change window
+# ansible-playbook -i inventory compare_routes.yml -e "change_id=CHGXXXX" --tags="post"
 #
 
 - hosts: localhost

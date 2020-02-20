@@ -3,5 +3,5 @@ router-1 ansible_host=192.168.2.20 ansible_network_os=ios
 router-2 ansible_host=192.168.2.21 ansible_network_os=ios
 router-3 ansible_host=192.168.2.22 ansible_network_os=ios
 
-[storage]
-minio ansible_port=9000
+[trafficjam]
+atc-trafficjam ansible_host=192.168.2.15
