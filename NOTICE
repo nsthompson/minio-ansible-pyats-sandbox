@@ -1,0 +1,9 @@
+minio-ansible-pyats-sandbox
+Written by: Nick Thompson (@nsthompson)
+Copyright (C) 2020 World Wide Technology
+All Rights Reserved
+
+This project includes software developed at World Wide Technology.
+
+This project includes:
+  ansible-pyats under the Cisco Sample Code license
