@@ -32,7 +32,7 @@
         config:
           name: "Random_A.{{ my_idx_a }}"
           description: "VRF_A Loopback"
-          vrf_id: 9
+          vrf_id: 6
           v4_address: "{{ item }}"
       loop: "{{ (random_A_addresses | shuffle)[0:5] }}"
       loop_control:
@@ -49,7 +49,7 @@
         config:
           name: "Random_B.{{ my_idx_b }}"
           description: "VRF_B Loopback"
-          vrf_id: 10
+          vrf_id: 7
           v4_address: "{{ item }}"
       loop: "{{ (random_B_addresses | shuffle)[0:5] }}"
       loop_control:
@@ -66,7 +66,7 @@
         config:
           name: "Random_A2.{{ my_idx_a2 }}"
           description: "VRF_A Loopback"
-          vrf_id: 9
+          vrf_id: 6
           v4_address: "{{ item }}"
       loop: "{{ (random_A2_addresses | shuffle)[0:5] }}"
       loop_control:
@@ -83,7 +83,7 @@
         config:
           name: "Random_B2.{{ my_idx_b2 }}"
           description: "VRF_B Loopback"
-          vrf_id: 10
+          vrf_id: 7
           v4_address: "{{ item }}"
       loop: "{{ (random_B2_addresses | shuffle)[0:5] }}"
       loop_control:
