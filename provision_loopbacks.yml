@@ -27,7 +27,7 @@
         config:
             name: "Loopback_A.{{ my_idx_a }}"
             description: "VRF_A Loopback"
-            vrf_id: 54
+            vrf_id: 9
             v4_address: "{{ item }}"
     loop: "{{ vrf_A_addresses }}"
     ignore_errors: true
@@ -42,7 +42,7 @@
         config:
             name: "Loopback_B.{{ my_idx_b }}"
             description: "VRF_B Loopback"
-            vrf_id: 55
+            vrf_id: 10
             v4_address: "{{ item }}"
     loop: "{{ vrf_B_addresses }}"
     ignore_errors: true
