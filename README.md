@@ -21,45 +21,47 @@ In this workshop you will accomplish the following:
 
 ## Solution Components
 
-* Ansible - https://www.ansible.com/
+* Ansible - <https://www.ansible.com/>
   * Ansible is an open-source IT automation engine capable of automating cloud provisioning, configuration management, application deployments, and network infrastructure
   * Ansible is written in Python and easily extended by writing custom modules in any language that can return JSON
-* pyATS - https://developer.cisco.com/pyats/
+* pyATS - <https://developer.cisco.com/pyats/>
   * pyATS or the Python Automated Test Systems is a Python3 based test automation infrastructure originally developed as an internal Cisco engineering tool, but made available externally through DevNet
-* MinIO - https://github.com/minio/minio
+* MinIO - <https://github.com/minio/minio>
   * Object storage is a data storage architecture that manages data as objects as opposed to a file hierarchy or as blocks within sectors and tracks.
   * Object storage allows for retention of massive amounts of unstructured data, as well as the programmatic manipulation of data.
   * MinIO is an open-source cloud storage server that is compatible with Amazon S3 APIs and written in Go.
   * MinIO is hardware agnostic and works on physical, virtualized, or containerized environments.
-* WWT TrafficJam - https://www.wwt.com/
+* WWT TrafficJam - <https://www.wwt.com/>
   * TrafficJam is a custom virtual router developed by WWT and used in the WWT Advanced Technology Center to provide performance monitoring, route generation and segmentation, circuit impairment, and simulated service provider clouds.
 
 ## Lab Topology
 
 ![Lab Topology](./documentation/images/LabTopology.png)
 
-## WWT Sandbox
+## WWT Resources
 
-https://www.wwt.com/lab/automated-change-control-validation-lab
+WWT Infrastructure Automation - <https://www.wwt.com/topic/infrastructure-automation#all>
 
-### Provided Components
+WWT Automated Change Control Validation Lab - <https://www.wwt.com/lab/automated-change-control-validation-lab>
 
-#### compare_routes.yml
+## Provided Components
+
+### compare_routes.yml
 
 Ansible Playbook to Gather and Compare Routing Information
 
-#### compare_prior_changes.yml
+### compare_prior_changes.yml
 
 Ansible Playbook to Compare Prior Change IDs
 
-#### filter_plugins/filters.py
+### filter_plugins/filters.py
 
 Ansible Filter to Parse String Data from pyats_diff()
 
-#### docker/minio/docker-compose.yml
+### docker/minio/docker-compose.yml
 
 Docker-Compose file for MinIO Object Storage
 
-#### bin/mount_minio.sh
+### bin/mount_minio.sh
 
 Shell Script to mount MinIO object storage using s3fs
