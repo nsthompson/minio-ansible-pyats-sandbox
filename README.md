@@ -8,7 +8,7 @@ Repository for DevNet Create 2020 Workshop:
 
 ## Problem Description
 
-Many organizations are requiring vast amounts of data to be collected before, and after, each approved change window.  However, many of the engineers working for these organizations are struggling with how to get started capturing and comparing device state programmatically. In this lab you will be using MinIO, Ansible, and pyATS to capture and validate pre and post-change data from Cisco routers.
+Many organizations are requiring vast amounts of data to be collected before, and after, each approved change window.  However, many of the engineers working for these organizations are struggling with how to get started capturing and comparing device state programmatically. In this workshop you will be using MinIO, Ansible, and pyATS to capture and validate pre and post-change data from Cisco routers.
 
 ## Solution Overview
 
