@@ -56,3 +56,10 @@ Ansible Playbook to Compare Prior Change IDs
 
 Ansible Filter to Parse String Data from pyats_diff()
 
+#### docker/minio/docker-compose.yml
+
+Docker-Compose file for MinIO Object Storage
+
+#### bin/mount_minio.sh
+
+Shell Script to mount MinIO object storage using s3fs
