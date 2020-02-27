@@ -40,28 +40,14 @@ In this workshop you will accomplish the following:
 
 ## WWT Resources
 
-WWT Infrastructure Automation - <https://www.wwt.com/topic/infrastructure-automation#all>
+**WWT Infrastructure Automation** - <https://www.wwt.com/topic/infrastructure-automation#all>
 
-WWT Automated Change Control Validation Lab - <https://www.wwt.com/lab/automated-change-control-validation-lab>
+**WWT Automated Change Control Validation Lab** - <https://www.wwt.com/lab/automated-change-control-validation-lab>
 
 ## Provided Components
 
-### compare_routes.yml
-
-Ansible Playbook to Gather and Compare Routing Information
-
-### compare_prior_changes.yml
-
-Ansible Playbook to Compare Prior Change IDs
-
-### filter_plugins/filters.py
-
-Ansible Filter to Parse String Data from pyats_diff()
-
-### docker/minio/docker-compose.yml
-
-Docker-Compose file for MinIO Object Storage
-
-### bin/mount_minio.sh
-
-Shell Script to mount MinIO object storage using s3fs
+* **compare_routes.yml** - Ansible Playbook to Gather and Compare Routing Information
+* **compare_prior_changes.yml** - Ansible Playbook to Compare Prior Change IDs
+* **filter_plugins/filters.py** - Ansible Filter to Parse String Data from pyats_diff()
+* **docker/minio/docker-compose.yml** - Docker-Compose file for MinIO Object Storage
+* **bin/mount_minio.sh** - Shell Script to mount MinIO object storage using s3fs
