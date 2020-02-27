@@ -4,6 +4,8 @@ Repository for DevNet Create 2020 Workshop:
 
 **Leveraging MinIO’s High Performance Object Storage, Ansible, and pyATS for network change and audit logs**
 
+[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/nsthompson/minio-ansible-pyats-sandbox)
+
 ## Problem Description
 
 Many organizations are requiring vast amounts of data to be collected before, and after, each approved change window.  However, many of the engineers working for these organizations are struggling with how to get started capturing and comparing device state programmatically. In this lab you will be using MinIO, Ansible, and pyATS to capture and validate pre and post-change data from Cisco routers.
