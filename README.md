@@ -40,9 +40,8 @@ In this workshop you will accomplish the following:
 
 ## WWT Resources
 
-**WWT Infrastructure Automation** - <https://www.wwt.com/topic/infrastructure-automation#all>
-
-**WWT Automated Change Control Validation Lab** - <https://www.wwt.com/lab/automated-change-control-validation-lab>
+* **WWT Infrastructure Automation** - <https://www.wwt.com/topic/infrastructure-automation#all>
+* **WWT Automated Change Control Validation Lab** - <https://www.wwt.com/lab/automated-change-control-validation-lab>
 
 ## Provided Components
 
