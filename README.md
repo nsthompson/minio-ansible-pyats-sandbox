@@ -41,3 +41,18 @@ In this workshop you will accomplish the following:
 ## WWT Sandbox
 
 https://www.wwt.com/lab/automated-change-control-validation-lab
+
+## Provided Components
+
+### compare_routes.yml
+
+Ansible Playbook to Gather and Compare Routing Information
+
+### compare_prior_changes.yml
+
+Ansible Playbook to Compare Prior Change IDs
+
+### filter_plugins/filters.py
+
+Ansible Filter to Parse String Data from pyats_diff()
+
