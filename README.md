@@ -50,3 +50,25 @@ In this workshop you will accomplish the following:
 * **filter_plugins/filters.py** - Ansible Filter to Parse String Data from pyats_diff()
 * **docker/minio/docker-compose.yml** - Docker-Compose file for MinIO Object Storage
 * **bin/mount_minio.sh** - Shell Script to mount MinIO object storage using s3fs
+
+## Using the Playbooks
+
+### compare_routes.yml
+
+* Collect State of Devices 'pre' change window
+  * ansible-playbook -i inventory compare_routes.yml --tags="pre"
+* Collect State of Devices 'post' change window
+  * ansible-playbook -i inventory compare_routes.yml -e "change_id=CHGXXXX" --tags="post"
+
+![Compare Routes](./documentation/images/compare_routes.gif)
+
+![Compare Routes Post Change](./documentation/images/post_change.gif)
+
+### compare_prior_changes.yml
+
+* Compare past change window artifacts
+  * ansible-playbook -i inventory compare_prior_changes.yml -e "change_id_1=CHGXXXX change_id_1_state=pre change_id_2=CHGYYYY change_id_2_state=post"
+
+  NOTE: change_id_1_state and change_id_2_state can be either 'pre' or 'post'
+
+![Compare Prior Changes](./documentation/images/compare_past_changes.gif)
