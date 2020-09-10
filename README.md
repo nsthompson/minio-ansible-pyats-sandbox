@@ -1,10 +1,14 @@
 # minio-ansible-pyats-sandbox
 
-Repository for DevNet Create 2020 Workshop:
+Repository for DevNet Create 2020 Workshop (canceled):
 
 **Leveraging MinIO’s High Performance Object Storage, Ansible, and pyATS for network change and audit logs**
 
 [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/nsthompson/minio-ansible-pyats-sandbox)
+
+Also presented at Ansiblefest 2020:
+
+**Using Ansible as a common tool to meet use cases across a diverse IT organization**
 
 ## Problem Description
 
